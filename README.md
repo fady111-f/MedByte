@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SVD RAM Defender — MedByte OS Lab
 
 > **Adaptive Low-Rank Memory Compression Framework for Operating Systems**
@@ -54,3 +55,6 @@ Download the full PDF from the site or see `assets/MedByte_Report.pdf`.
 ---
 
 Built by **MedByte OS Lab** · For educational and research purposes.
+=======
+# MedByte-1
+>>>>>>> fd3b5d6db0e58a97e0564fdf9467d823c44fbbb5
