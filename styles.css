@@ -1050,7 +1050,7 @@ h3 {
 /* HUD */
 .hud {
   display: grid;
-  grid-template-columns: 110px 1fr 110px 110px;
+  grid-template-columns: minmax(90px, 110px) 1fr minmax(90px, 110px) minmax(90px, 110px);
   gap: 10px;
   align-items: stretch;
   margin-bottom: 14px;
