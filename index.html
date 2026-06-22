@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SVD RAM Defender | Adaptive Low-Rank Memory Compression</title>
+    <meta
+      name="description"
+      content="Interactive research page and minigame for Adaptive Low-Rank Memory Compression Framework for Operating Systems — MedByte OS Lab."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <!-- ── Header ───────────────────────────────────────────── -->
+    <header class="site-header" id="top" aria-label="Site header">
+      <a class="brand" href="#top" aria-label="SVD RAM Defender home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="7" height="7" rx="1.5" fill="rgba(62,231,255,0.9)"/>
+            <rect x="10" y="1" width="7" height="7" rx="1.5" fill="rgba(114,255,159,0.7)"/>
+            <rect x="1" y="10" width="7" height="7" rx="1.5" fill="rgba(114,255,159,0.7)"/>
+            <rect x="10" y="10" width="7" height="7" rx="1.5" fill="rgba(62,231,255,0.5)"/>
+          </svg>
+        </span>
+        <span>MedByte OS Lab</span>
+      </a>
+      <nav class="top-nav" aria-label="Primary navigation">
+        <a href="#abstract">Abstract</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#metrics">Results</a>
+        <a href="#game">Minigame</a>
+        <a class="nav-cta" href="./assets/MedByte_Report.pdf" download>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download PDF
+        </a>
+      </nav>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
+      <nav>
+        <a href="#abstract" class="mobile-link">Abstract</a>
+        <a href="#how-it-works" class="mobile-link">How It Works</a>
+        <a href="#metrics" class="mobile-link">Results</a>
+        <a href="#game" class="mobile-link">Minigame</a>
+        <a href="./assets/MedByte_Report.pdf" download class="mobile-link">Download PDF</a>
+      </nav>
+    </div>
+
+    <main>
+      <!-- ── Hero ─────────────────────────────────────────────── -->
+      <section id="hero-section" class="hero-section" aria-labelledby="paper-title">
+        <canvas id="matrixCanvas" class="matrix-canvas" aria-hidden="true"></canvas>
+        <div class="grid-overlay" aria-hidden="true"></div>
+        <div class="floating-orbs" aria-hidden="true">
+          <div class="orb orb-1"></div>
+          <div class="orb orb-2"></div>
+          <div class="orb orb-3"></div>
+        </div>
+
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="badge-dot"></span>
+            <span>Operating Systems · SVD · Low-Rank Compression</span>
+          </div>
+          <h1 id="paper-title">
+            Adaptive Low-Rank<br />
+            <span class="gradient-text">Memory Compression</span>
+          </h1>
+          <p class="hero-copy">
+            A research-driven OS memory manager that reshapes RAM pages into matrices,
+            detects low-rank structure, and uses truncated Singular Value Decomposition
+            to compress pages dynamically as memory pressure rises.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="./assets/MedByte_Report.pdf" download id="hero-pdf-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Research PDF
+            </a>
+            <a class="button secondary" href="#game" id="hero-game-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Play SVD RAM Defender
+            </a>
+          </div>
+
+          <!-- Animated stats ticker -->
+          <div class="hero-stats" aria-label="Key statistics">
+            <div class="stat-pill">
+              <span class="stat-number" data-target="75">0</span><span class="stat-unit">%</span>
+              <span class="stat-label">Memory Savings</span>
+            </div>
+            <div class="stat-divider" aria-hidden="true"></div>
+            <div class="stat-pill">
+              <span class="stat-number" data-target="87">0</span><span class="stat-unit">%</span>
+              <span class="stat-label">Peak Reduction</span>
+            </div>
+            <div class="stat-divider" aria-hidden="true"></div>
+            <div class="stat-pill">
+              <span class="stat-number" data-target="2">0</span><span class="stat-unit">-pass</span>
+              <span class="stat-label">Decision Logic</span>
+            </div>
+          </div>
+        </div>
+
+        <a href="#abstract" class="scroll-hint" aria-label="Scroll to content">
+          <span>Scroll to explore</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+      </section>
+
+      <!-- ── Abstract ──────────────────────────────────────────── -->
+      <section id="abstract" class="section-container" aria-labelledby="abstract-title">
+        <div class="section-label-row">
+          <span class="section-tag">01 — Abstract</span>
+          <div class="tag-line" aria-hidden="true"></div>
+        </div>
+
+        <div class="abstract-grid">
+          <div class="abstract-text glass-card">
+            <h2 id="abstract-title">Compress structure.<br /><span class="gradient-text">Reject noise.</span></h2>
+            <p>
+              The paper proposes integrating a low-rank compression decision model into the operating
+              system memory manager. Instead of treating every memory page equally, the OS samples a
+              page, reshapes it into a matrix, and tests whether a compact SVD representation can
+              preserve it with acceptable reconstruction error.
+            </p>
+            <p>
+              When RAM pressure is low, the system keeps more singular components for accuracy. As
+              pressure rises, the selected rank becomes more aggressive — saving space on structured
+              pages while filtering out random pages that would reconstruct poorly.
+            </p>
+            <div class="abstract-tags">
+              <span class="tag">SVD</span>
+              <span class="tag">Memory Management</span>
+              <span class="tag">OS Kernel</span>
+              <span class="tag">Low-Rank Approximation</span>
+            </div>
+          </div>
+
+          <div class="metric-stack">
+            <article class="metric-card" id="metric-1">
+              <div class="metric-icon cyan">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <span class="metric-value" data-target="75" data-suffix="%">0%</span>
+              <h3>Storage Savings</h3>
+              <p>A 64×64 page compressed with rank 8 stores ~25% of raw elements.</p>
+              <div class="metric-progress">
+                <div class="metric-bar" style="--target-width: 75%"></div>
+              </div>
+            </article>
+
+            <article class="metric-card" id="metric-2">
+              <div class="metric-icon green">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <span class="metric-value" data-target="87" data-suffix=".5%">0%</span>
+              <h3>Peak Reduction</h3>
+              <p>Structured low-rank pages compressed aggressively under high pressure.</p>
+              <div class="metric-progress">
+                <div class="metric-bar green" style="--target-width: 87.5%"></div>
+              </div>
+            </article>
+
+            <article class="metric-card" id="metric-3">
+              <div class="metric-icon amber">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <span class="metric-value" style="font-size: clamp(1.6rem,3vw,2.4rem)">0/1</span>
+              <h3>Binary Decision</h3>
+              <p>Pages accepted only when compression ratio AND reconstruction error pass.</p>
+              <div class="metric-progress">
+                <div class="metric-bar amber" style="--target-width: 60%"></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── How It Works ──────────────────────────────────────── -->
+      <section id="how-it-works" class="section-container" aria-labelledby="how-title">
+        <div class="section-label-row">
+          <span class="section-tag">02 — Methodology</span>
+          <div class="tag-line" aria-hidden="true"></div>
+        </div>
+        <h2 id="how-title" class="section-title">How SVD compression<br /><span class="gradient-text">works in the OS</span></h2>
+
+        <div class="pipeline-steps" role="list">
+          <div class="pipeline-step" role="listitem">
+            <div class="step-number">01</div>
+            <div class="step-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <h3>Page Sampling</h3>
+            <p>The OS samples an incoming memory page from the swap candidate list and converts it into a 2D matrix representation.</p>
+            <div class="step-connector" aria-hidden="true"></div>
+          </div>
+
+          <div class="pipeline-step" role="listitem">
+            <div class="step-number">02</div>
+            <div class="step-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3l18 18M9 9l6 6M3 21l18-18"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h3>SVD Decomposition</h3>
+            <p>Truncated SVD decomposes the matrix into U, Σ, and V components. Only the top-k singular values are retained.</p>
+            <div class="step-connector" aria-hidden="true"></div>
+          </div>
+
+          <div class="pipeline-step" role="listitem">
+            <div class="step-number">03</div>
+            <div class="step-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <h3>Error Evaluation</h3>
+            <p>Reconstruction error is compared against a dynamic threshold that tightens under high memory pressure.</p>
+            <div class="step-connector" aria-hidden="true"></div>
+          </div>
+
+          <div class="pipeline-step" role="listitem">
+            <div class="step-number">04</div>
+            <div class="step-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3>Compress or Reject</h3>
+            <p>Structured pages are compressed and stored. Random pages are stored raw — avoiding costly reconstruction errors.</p>
+          </div>
+        </div>
+
+        <!-- SVD Visualizer -->
+        <div class="svd-visualizer glass-card" aria-label="SVD visualization">
+          <div class="visualizer-header">
+            <span class="section-tag">Live SVD Simulator</span>
+            <div class="rank-controls">
+              <label for="rankSlider">Rank k:</label>
+              <input type="range" id="rankSlider" min="1" max="16" value="4" class="rank-slider" aria-label="SVD rank" />
+              <span id="rankValue" class="rank-display">4</span>
+            </div>
+          </div>
+          <div class="svd-canvases">
+            <div class="svd-panel">
+              <canvas id="originalCanvas" width="140" height="140" aria-label="Original matrix"></canvas>
+              <span class="svd-label">Original</span>
+            </div>
+            <div class="svd-arrow" aria-hidden="true">
+              <svg width="32" height="24" viewBox="0 0 32 24"><path d="M0 12h28M22 6l6 6-6 6" stroke="rgba(62,231,255,0.8)" stroke-width="2" fill="none"/></svg>
+              <span>SVD rank-k</span>
+            </div>
+            <div class="svd-panel">
+              <canvas id="compressedCanvas" width="140" height="140" aria-label="Compressed reconstruction"></canvas>
+              <span class="svd-label">Reconstructed</span>
+            </div>
+            <div class="svd-stats-panel">
+              <div class="svd-stat">
+                <span class="svd-stat-label">Ratio</span>
+                <span class="svd-stat-value" id="compressionRatio">—</span>
+              </div>
+              <div class="svd-stat">
+                <span class="svd-stat-label">Error</span>
+                <span class="svd-stat-value" id="reconstructionError">—</span>
+              </div>
+              <div class="svd-stat">
+                <span class="svd-stat-label">Decision</span>
+                <span class="svd-stat-value" id="compressionDecision">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="visualizer-actions">
+            <button class="vis-btn" id="genStructured" type="button">Generate Structured Page</button>
+            <button class="vis-btn secondary" id="genRandom" type="button">Generate Random Page</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Metrics ───────────────────────────────────────────── -->
+      <section id="metrics" class="section-container" aria-labelledby="metrics-title">
+        <div class="section-label-row">
+          <span class="section-tag">03 — Results</span>
+          <div class="tag-line" aria-hidden="true"></div>
+        </div>
+        <h2 id="metrics-title" class="section-title">Performance across<br /><span class="gradient-text">pressure levels</span></h2>
+
+        <div class="charts-row">
+          <div class="chart-card glass-card" aria-label="Compression savings by rank">
+            <h3>Compression Savings by Rank</h3>
+            <p>Storage savings vs. rank <em>k</em> for a 64×64 page</p>
+            <canvas id="savingsChart" height="180" aria-label="Bar chart of compression savings"></canvas>
+          </div>
+          <div class="chart-card glass-card" aria-label="Pressure vs. threshold chart">
+            <h3>Dynamic Threshold Curve</h3>
+            <p>Compression threshold tightens as RAM pressure rises</p>
+            <canvas id="pressureChart" height="180" aria-label="Line chart of pressure vs threshold"></canvas>
+          </div>
+        </div>
+
+        <div class="comparison-table-wrap glass-card">
+          <h3>Algorithm Decision Matrix</h3>
+          <table class="comparison-table" aria-label="Compression decision matrix">
+            <thead>
+              <tr>
+                <th scope="col">Page Type</th>
+                <th scope="col">Action</th>
+                <th scope="col">RAM Cost</th>
+                <th scope="col">Bytes Saved</th>
+                <th scope="col">Risk</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-good">
+                <td><span class="page-badge structured">Structured</span></td>
+                <td>SVD Compress</td>
+                <td>3 units</td>
+                <td class="highlight-cyan">3,072 bytes</td>
+                <td><span class="risk-badge low">Low</span></td>
+              </tr>
+              <tr class="row-warn">
+                <td><span class="page-badge structured">Structured</span></td>
+                <td>Store Raw</td>
+                <td>12 units</td>
+                <td class="highlight-amber">0 bytes</td>
+                <td><span class="risk-badge med">Medium</span></td>
+              </tr>
+              <tr class="row-warn">
+                <td><span class="page-badge random">Random</span></td>
+                <td>Store Raw</td>
+                <td>12 units</td>
+                <td>0 bytes</td>
+                <td><span class="risk-badge low">Safe</span></td>
+              </tr>
+              <tr class="row-bad">
+                <td><span class="page-badge random">Random</span></td>
+                <td>SVD Compress</td>
+                <td>24 units</td>
+                <td class="highlight-red">−24 units penalty</td>
+                <td><span class="risk-badge high">High</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ── Game ──────────────────────────────────────────────── -->
+      <section id="game" class="game-section" aria-labelledby="game-title">
+        <div class="section-container">
+          <div class="section-label-row">
+            <span class="section-tag">04 — Interactive Demo</span>
+            <div class="tag-line" aria-hidden="true"></div>
+          </div>
+          <h2 id="game-title" class="section-title">SVD RAM Defender<br /><span class="gradient-text">Protect the OS from overflow</span></h2>
+          <p class="section-intro">
+            Act as the OS memory manager. Compress structured pages with SVD, store noisy pages raw,
+            and keep RAM below capacity as memory pressure climbs. Build combo streaks for bonus points!
+          </p>
+        </div>
+
+        <div class="game-container section-container">
+          <div class="game-shell" role="application" aria-label="SVD RAM Defender game">
+            <!-- HUD -->
+            <div class="hud" aria-label="Game HUD">
+              <div class="hud-stat" id="hud-score">
+                <svg class="hud-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span class="hud-label">Bytes Saved</span>
+                <strong id="scoreValue">0</strong>
+              </div>
+
+              <div class="hud-stat" id="hud-combo">
+                <svg class="hud-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                <span class="hud-label">Combo</span>
+                <strong id="comboValue">×1</strong>
+              </div>
+
+              <div class="hud-ram" aria-label="RAM capacity">
+                <div class="ram-topline">
+                  <span>RAM Pressure</span>
+                  <strong id="ramValue">0%</strong>
+                </div>
+                <div class="ram-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="RAM usage">
+                  <span id="ramFill" class="ram-fill"></span>
+                </div>
+                <div class="ram-zones" aria-hidden="true">
+                  <span>Safe</span>
+                  <span>Warning</span>
+                  <span>Critical</span>
+                </div>
+              </div>
+
+              <div class="hud-stat" id="hud-level">
+                <svg class="hud-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                <span class="hud-label">Pressure</span>
+                <strong id="pressureValue">1.0×</strong>
+              </div>
+            </div>
+
+            <!-- Game Stage -->
+            <div id="gameStage" class="game-stage">
+              <canvas id="gameCanvas" aria-label="SVD RAM Defender game canvas"></canvas>
+
+              <!-- Combo popup (dynamic, injected by JS) -->
+              <div id="comboPopup" class="combo-popup hidden" aria-live="polite"></div>
+
+              <!-- Start Overlay -->
+              <div id="startOverlay" class="game-overlay">
+                <div class="overlay-card">
+                  <div class="overlay-icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(62,231,255,0.9)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                  </div>
+                  <p class="overlay-label">Boot Sequence Ready</p>
+                  <h3>Protect RAM from overflow.</h3>
+                  <p>
+                    Blue <strong style="color:var(--cyan)">structured</strong> pages love SVD — compress them!<br/>
+                    Red <strong style="color:var(--red)">random</strong> pages punish compression — store raw.
+                  </p>
+                  <div class="overlay-controls-hint">
+                    <span><kbd>←</kbd> Compress (SVD)</span>
+                    <span><kbd>→</kbd> Store Raw</span>
+                  </div>
+                  <button id="startButton" class="button primary" type="button">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    Start Game
+                  </button>
+                </div>
+              </div>
+
+              <!-- Game Over Overlay -->
+              <div id="gameOverOverlay" class="game-overlay hidden">
+                <div class="overlay-card danger">
+                  <div class="overlay-icon danger">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,77,109,0.9)" stroke-width="1.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  </div>
+                  <p class="overlay-label">System Crash</p>
+                  <h3>RAM capacity reached 100%.</h3>
+                  <p id="finalScore">Bytes saved: 0</p>
+                  <p id="finalCombo" style="color:var(--amber);font-size:0.92rem;margin-bottom:16px"></p>
+                  <button id="restartButton" class="button primary" type="button">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.08"/></svg>
+                    Reboot &amp; Retry
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-row" aria-label="Memory manager actions">
+              <button id="compressButton" class="action-button compress" type="button" disabled>
+                <div class="action-btn-content">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M9 9l6 6"/><circle cx="12" cy="12" r="3"/></svg>
+                  <span>Compress (SVD)</span>
+                </div>
+                <kbd>←</kbd>
+              </button>
+              <button id="rawButton" class="action-button raw" type="button" disabled>
+                <div class="action-btn-content">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  <span>Store Raw</span>
+                </div>
+                <kbd>→</kbd>
+              </button>
+            </div>
+
+            <!-- Status Log -->
+            <div class="status-log" aria-live="polite" role="status">
+              <div id="statusMessage" class="status-message">
+                <span class="status-dot idle"></span>
+                <span id="statusText">Awaiting boot sequence…</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Leaderboard / Tips sidebar -->
+          <div class="game-sidebar">
+            <div class="sidebar-card glass-card" aria-labelledby="tips-title">
+              <h3 id="tips-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Pro Tips
+              </h3>
+              <ul class="tips-list">
+                <li>Watch page <strong style="color:var(--cyan)">texture</strong> — grid patterns = structured</li>
+                <li>Build a <strong style="color:var(--amber)">combo streak</strong> for 2× bonus points</li>
+                <li>Under high pressure, <strong style="color:var(--green)">be faster</strong> — pages accelerate</li>
+                <li>Letting a page fall <strong style="color:var(--red)">costs RAM</strong> with no savings</li>
+              </ul>
+            </div>
+
+            <div class="sidebar-card glass-card" aria-labelledby="legend-title">
+              <h3 id="legend-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                Page Legend
+              </h3>
+              <div class="legend-item">
+                <div class="legend-swatch structured-swatch"></div>
+                <div>
+                  <strong>Structured (Low-Rank)</strong>
+                  <p>Blue grid pages. Compress for big savings.</p>
+                </div>
+              </div>
+              <div class="legend-item">
+                <div class="legend-swatch random-swatch"></div>
+                <div>
+                  <strong>Random (High-Entropy)</strong>
+                  <p>Red noisy pages. Store raw to avoid penalty.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="sidebar-card glass-card session-stats" id="sessionStats" aria-labelledby="session-title">
+              <h3 id="session-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                Session Stats
+              </h3>
+              <div class="session-grid">
+                <div class="session-stat"><span>Best Score</span><strong id="bestScore">—</strong></div>
+                <div class="session-stat"><span>Best Combo</span><strong id="bestCombo">—</strong></div>
+                <div class="session-stat"><span>Games Played</span><strong id="gamesPlayed">0</strong></div>
+                <div class="session-stat"><span>Correct</span><strong id="correctDecisions">0</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ── Footer ───────────────────────────────────────────── -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1" y="1" width="7" height="7" rx="1.5" fill="rgba(62,231,255,0.9)"/>
+              <rect x="10" y="1" width="7" height="7" rx="1.5" fill="rgba(114,255,159,0.7)"/>
+              <rect x="1" y="10" width="7" height="7" rx="1.5" fill="rgba(114,255,159,0.7)"/>
+              <rect x="10" y="10" width="7" height="7" rx="1.5" fill="rgba(62,231,255,0.5)"/>
+            </svg>
+          </span>
+          <span class="footer-brand-name">MedByte OS Lab</span>
+        </div>
+        <p class="footer-desc">
+          A visual companion for the <em>Adaptive Low-Rank Memory Compression Framework</em> research paper.
+          Built to make OS memory management intuitive and interactive.
+        </p>
+        <div class="footer-links">
+          <a href="./assets/MedByte_Report.pdf" download>Full Research PDF</a>
+          <a href="#abstract">Abstract</a>
+          <a href="#how-it-works">Methodology</a>
+          <a href="#game">Play Game</a>
+        </div>
+        <p class="footer-copy">© 2025 MedByte OS Lab · For educational and research purposes</p>
+      </div>
+    </footer>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
