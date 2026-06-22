@@ -1579,14 +1579,14 @@ kbd {
 @media (max-width: 720px) {
   .top-nav { display: none; }
   .hamburger { display: flex; }
-  .hud {
+  .hud-top-row {
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
   }
-  .hud-ram {
+  #hud-level {
     grid-column: 1 / -1;
   }
   .hud-stat strong { font-size: 1.1rem; }
+  .hud-label { font-size: 0.6rem; letter-spacing: 0; }
   h1 { font-size: clamp(2.4rem, 14vw, 4.5rem); }
 }
 
@@ -1597,6 +1597,14 @@ kbd {
   .action-row { flex-direction: column; }
   .action-button { min-height: 56px; }
   #gameCanvas { height: 400px; }
+  .hud-top-row {
+    grid-template-columns: 1fr;
+  }
+  #hud-level {
+    grid-column: auto;
+  }
+  .hud-stat { flex-direction: row; justify-content: space-between; padding: 10px 14px; }
+  .hud-stat strong { font-size: 1.2rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
