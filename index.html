@@ -365,18 +365,28 @@
           <div class="game-shell" role="application" aria-label="SVD RAM Defender game">
             <!-- HUD -->
             <div class="hud" aria-label="Game HUD">
-              <div class="hud-stat" id="hud-score">
-                <svg class="hud-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <span class="hud-label">Bytes Saved</span>
-                <strong id="scoreValue">0</strong>
+              <!-- Top row: 3 stats -->
+              <div class="hud-top-row">
+                <div class="hud-stat" id="hud-score">
+                  <svg class="hud-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <span class="hud-label">Bytes Saved</span>
+                  <strong id="scoreValue">0</strong>
+                </div>
+
+                <div class="hud-stat" id="hud-combo">
+                  <svg class="hud-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                  <span class="hud-label">Combo</span>
+                  <strong id="comboValue">×1</strong>
+                </div>
+
+                <div class="hud-stat" id="hud-level">
+                  <svg class="hud-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  <span class="hud-label">Pressure</span>
+                  <strong id="pressureValue">1.0×</strong>
+                </div>
               </div>
 
-              <div class="hud-stat" id="hud-combo">
-                <svg class="hud-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                <span class="hud-label">Combo</span>
-                <strong id="comboValue">×1</strong>
-              </div>
-
+              <!-- Full-width RAM meter -->
               <div class="hud-ram" aria-label="RAM capacity">
                 <div class="ram-topline">
                   <span>RAM Pressure</span>
@@ -387,17 +397,12 @@
                 </div>
                 <div class="ram-zones" aria-hidden="true">
                   <span>Safe</span>
-                  <span>Warn</span>
-                  <span>Crit</span>
+                  <span>Warning</span>
+                  <span>Critical</span>
                 </div>
               </div>
-
-              <div class="hud-stat" id="hud-level">
-                <svg class="hud-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                <span class="hud-label">Pressure</span>
-                <strong id="pressureValue">1.0×</strong>
-              </div>
             </div>
+
 
             <!-- Game Stage -->
             <div id="gameStage" class="game-stage">
